@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e5bc8cd-8dc5-414c-9abd-cb1cf1d916ad" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/node/package.json" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/evenWarmer.js" afterPath="$PROJECT_DIR$/src/evenWarmer.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -31,21 +31,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="evenWarmer.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="evenWarmer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/evenWarmer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="116" column="5" lean-forward="true" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
+            <state relative-caret-position="72">
+              <caret line="93" column="29" lean-forward="false" selection-start-line="93" selection-start-column="29" selection-end-line="93" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="request-response-test.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="request-response-test.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/request-response-test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="642">
-              <caret line="184" column="7" lean-forward="true" selection-start-line="184" selection-start-column="7" selection-end-line="184" selection-end-column="7" />
+            <state relative-caret-position="2415">
+              <caret line="161" column="21" lean-forward="false" selection-start-line="161" selection-start-column="21" selection-end-line="161" selection-end-column="21" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -97,7 +97,7 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-41" />
+    <option name="x" value="29" />
     <option name="y" value="23" />
     <option name="width" value="1229" />
     <option name="height" value="728" />
@@ -255,15 +255,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487283049414</updated>
-      <workItem from="1487283050901" duration="27816000" />
+      <workItem from="1487283050901" duration="35001000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27816000" />
+    <option name="totallyTimeSpent" value="35001000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-41" y="23" width="1229" height="728" extended-state="0" />
+    <frame x="29" y="23" width="1229" height="728" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24979658" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -314,21 +314,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/request-response-test.js">
+    <entry file="file://$PROJECT_DIR$/src/evenWarmer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
-          <caret line="184" column="7" lean-forward="true" selection-start-line="184" selection-start-column="7" selection-end-line="184" selection-end-column="7" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="72">
+          <caret line="93" column="29" lean-forward="false" selection-start-line="93" selection-start-column="29" selection-end-line="93" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/evenWarmer.js">
+    <entry file="file://$PROJECT_DIR$/test/request-response-test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="116" column="5" lean-forward="true" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
-          <folding />
+        <state relative-caret-position="2415">
+          <caret line="161" column="21" lean-forward="false" selection-start-line="161" selection-start-column="21" selection-end-line="161" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

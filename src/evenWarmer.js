@@ -2,6 +2,7 @@
 const net = require('net');
 const HOST = '127.0.0.1';
 const PORT = 8080;
+const fs = require('fs');
 
 
 const server = net.createServer((sock) => {
@@ -14,10 +15,12 @@ const server = net.createServer((sock) => {
 
         const resTest = new Response(sock);
 
+
     //TODO: figure out this """CSS""" nonsense
         if(reqobj.path === '/'){
-            resTest.setHeader('Content-Type', 'text/html');
-            resTest.send(300, '<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
+            resTest.sendFile('/img/bmo1.gif');
+            //resTest.setHeader('Content-Type', 'text/html');
+            //resTest.send(300, '<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
 
         }
         else if(reqobj.path === "/foo.css"){
@@ -28,7 +31,7 @@ const server = net.createServer((sock) => {
             resTest.send(404, 'this is not a page');
 
         }
-        resTest.end();
+        //resTest.end();
 
     });
 
@@ -65,7 +68,6 @@ class Response{
     send(statusCode, body){
         this.statusCode = statusCode;
         this.body = body;
-        //console.log("body isnide send is " + this.body);
         let stringVersion = this.toString();
 
         this.write(stringVersion);
@@ -74,24 +76,32 @@ class Response{
 
     writeHead(statusCode){
         this.statusCode = statusCode;
-        let stringVersion = this.toString();
-
-        this.write(stringVersion);
-        //don't close
+        let resp = "HTTP/1.1 ";
+        resp = resp.concat(this.statusCode + " ");
+        if(statusCodes.hasOwnProperty(this.statusCode)){
+            resp = resp.concat(statusCodes[this.statusCode] + '\r\n');
+        }
+        let headers = this.headers;
+        Object.keys(headers).forEach(function(key) {
+            resp = resp.concat(key + ": " + headers[key] + '\r\n');
+        });
+        resp = resp.concat("\r\n");
+        this.write(resp);
     }
 
     redirect(statusCode, url){
-
-        if(!statusCode){
-            this.statusCode = '301';
+        if(url === undefined){ //if first argument wasn't passed in
+            this.statusCode = 301;
+            this.headers['Location'] = statusCode;//only one argument passed in... the link
         }else{
            this.statusCode = statusCode;
+           this.headers['Location'] = url;
         }
 
-        this.headers['Location'] = url;
         let stringVersion = this.toString();
         this.write(stringVersion);
         this.end();
+        //this.send(statusCode, stringVersion);
     }
 
     toString(){
@@ -103,25 +113,68 @@ class Response{
         let headers = this.headers;
         Object.keys(headers).forEach(function(key) {
 
-            resp = resp.concat(key + ": " + headers[key] + '\n');
+            resp = resp.concat(key + ": " + headers[key] + '\r\n');
 
         });
         resp = resp.concat("\r\n");
         if(!this.body){
-            resp = resp.concat(" ");
+            resp = resp.concat("");
         }else{
             resp = resp.concat(this.body);
         }
 
         return resp;
     }
+
     sendFile(fileName){
+        let fileBeginning = '../public';
+        let filePath = fileBeginning + fileName;
+        console.log("file path is " + filePath);
+
+        let fileType = fileName.split(".")[1];
+        const encoding = {
+            'encoding' : ""
+        };
+        if(fileType === 'txt'){
+            console.log("encoding is now utf8");
+            encoding.encoding == "utf8";
+        }
+        console.log("file type is " + fileType);
+        fs.readFile(filePath, encoding, this.fileHandler.bind(this, fileType));
+
+
+    }
+
+    fileHandler(contentType, err, data){
+    console.log("inside fileHandler");
+    console.log("content type is " + contentType);
+    console.log("err is " + err);
+    //console.log("data is " + data);
+
+    //1. set the contentType header
+     if(fileTypes.hasOwnProperty(contentType)){
+        this.setHeader('Content-Type', fileTypes[contentType]);
+     }
+     this.writeHead(200);
+     this.write('<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
+     this.write(data);
+     this.end();
 
     }
 
 
 
 }
+let fileTypes = {
+    'jpeg': 'image/jpeg',
+    'jpg' : 'image/jpeg',
+    'png' : 'image/png',
+    'gif' : 'image/gif',
+    'html': 'text/html',
+    'css' : 'text/css',
+    'txt' : 'text/plain'
+};
+
 let statusCodes ={
     '200' : 'OK',
     '404' : 'Not Found',
@@ -178,13 +231,17 @@ class Request{
 
         Object.keys(headers).forEach(function(key) {
 
-            s = s.concat(key + ": " + headers[key] + '\n');
+            s = s.concat(key + ": " + headers[key] + '\r\n');
 
         });
     s = s.concat("\r\n");
-    s = s.concat(this.body + "\n");
+    if(this.body === " "){
+        return s;
+    }else{
+        s = s.concat(this.body);
+        return s;
+    }
 
-    return s;
 
 
     }
