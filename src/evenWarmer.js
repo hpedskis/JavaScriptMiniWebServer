@@ -18,20 +18,25 @@ const server = net.createServer((sock) => {
 
     //TODO: figure out this """CSS""" nonsense
         if(reqobj.path === '/'){
-            resTest.sendFile('/img/bmo1.gif');
-            //resTest.setHeader('Content-Type', 'text/html');
-            //resTest.send(300, '<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
+            resTest.setHeader('Content-Type', 'text/html');
+            resTest.send(300, '<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
 
         }
         else if(reqobj.path === "/foo.css"){
             resTest.setHeader('Content-Type', 'text/html');
             resTest.send(300, '<h1><em>Welcome to the hidden page!!</em></h1>');
-        }else{
+        }
+        else if(reqobj.path === '/bmo1.gif'){
+            resTest.sendFile('/img/bmo1.gif');
+        }
+        else if (reqobj.path === '/test'){
+            resTest.sendFile('/html/test.html')
+        }
+        else{
             resTest.setHeader('Content-Type', 'text/html');
             resTest.send(404, 'this is not a page');
 
         }
-        //resTest.end();
 
     });
 
@@ -146,9 +151,6 @@ class Response{
     }
 
     fileHandler(contentType, err, data){
-    console.log("inside fileHandler");
-    console.log("content type is " + contentType);
-    console.log("err is " + err);
     //console.log("data is " + data);
 
     //1. set the contentType header
@@ -156,7 +158,6 @@ class Response{
         this.setHeader('Content-Type', fileTypes[contentType]);
      }
      this.writeHead(200);
-     this.write('<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
      this.write(data);
      this.end();
 
