@@ -23,7 +23,7 @@ function mockSocket() {
 
 describe('Request', function() {
 
-    it('parses and http request header informationinto properties', function() {
+    it('parses and http request header information into properties', function() {
         var s = 'GET /foo.html HTTP/1.1\r\n';
         s += 'Host: localhost:8080\r\n';
         s += 'Referer: http://bar.baz/qux.html\r\n';
@@ -65,6 +65,7 @@ describe('Request', function() {
         expect(req.toString()).to.equal(s);
     });
 });
+
 
 describe('Response', function() {
 
@@ -183,4 +184,6 @@ describe('Response', function() {
         expect(socket.end.callCount).to.equal(0);
     });
 
+
 });
+
