@@ -11,7 +11,7 @@ app.get('/T1.gif', function(req, res){
     res.sendFile('/img/T1.gif');
 });
 app.get('/T2.gif', function(req, res){
-    res.sendFile('/img/T2.gif');
+    res.sendFile('/img/totoro3.gif');
 });
 app.get('/css/base.css', function(req, res) {
     res.sendFile('/base.css');
@@ -20,13 +20,27 @@ app.get('/css/base.css', function(req, res) {
 app.get('/css/base.css/', function(req, res) {
     res.redirect('/css/base.css');
 });
+app.get('/totoroGoodbye.gif', function(req, res){
+    res.sendFile('/img/totoroGoodbye.gif');
+});
 
-
+app.get('/0', function(req, res){
+    res.sendFile('/img/totoro_hello.jpg');
+});
+app.get('/1', function(req, res){
+    res.sendFile('/img/totoro1.gif');
+});
+app.get('/2', function(req, res){
+    res.sendFile('/img/totoro0.gif');
+});
+app.get('/3', function(req, res){
+    res.sendFile('/img/t_png.png');
+});
 
 app.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     res.send(300, '<head><link href="/css/base.css" rel="stylesheet"/><img src = "/T1.gif"/></head> ' +
-        '<body><h1>Welcome to the homepage!</h1></body>');
+        '<body><h1>Welcome to the homepage of the website about Totoros!</h1></body>');
 });
 app.get('/about', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
@@ -39,18 +53,6 @@ app.get('/about/', function(req, res) {
     res.redirect('/about');
 });
 
-app.get('/0', function(req, res){
-    res.sendFile('/img/totoro0.gif');
-})
-app.get('/1', function(req, res){
-    res.sendFile('/img/totoro1.gif');
-});
-app.get('/2', function(req, res){
-    res.sendFile('/img/totoro2.gif');
-});
-app.get('/3', function(req, res){
-    res.sendFile('/img/totoro3.gif');
-});
 
 app.get('/rando', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
@@ -59,7 +61,7 @@ app.get('/rando', function(req, res) {
         '<link href="/css/base.css" rel="stylesheet"/> <img src ="placeholder.gif" id = "toChange"/>' +
         ' <script type=" text/javascript"> document.getElementById("toChange").src= "/" + Math.floor(Math.random() *4); </script></head>' +
         '<body onload="load()">' +
-        '<body><h1>Enjoy a random gif of totoro</h1></body>');
+        '<body><h1>Enjoy a *random* view of totoro</h1></body>');
 });
 
 app.get('/rando/', function(req, res) {

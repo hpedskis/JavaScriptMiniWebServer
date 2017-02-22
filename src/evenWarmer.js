@@ -32,7 +32,7 @@ const server = net.createServer((sock) => {
 
         }
         else if (reqobj.path === '/test'){
-            resTest.sendFile('/html/test.html')
+            resTest.sendFile('/html/test.html');
         }
         else{
             resTest.setHeader('Content-Type', 'text/html');
@@ -75,7 +75,7 @@ class Response{
     send(statusCode, body){
         this.statusCode = statusCode;
         this.body = body;
-        let stringVersion = this.toString();
+        const stringVersion = this.toString();
 
         this.write(stringVersion);
         this.end();
@@ -88,7 +88,7 @@ class Response{
         if(statusCodes.hasOwnProperty(this.statusCode)){
             resp = resp.concat(statusCodes[this.statusCode] + '\r\n');
         }
-        let headers = this.headers;
+        const headers = this.headers;
         Object.keys(headers).forEach(function(key) {
             resp = resp.concat(key + ": " + headers[key] + '\r\n');
         });
@@ -105,7 +105,7 @@ class Response{
            this.headers['Location'] = url;
         }
 
-        let stringVersion = this.toString();
+        const stringVersion = this.toString();
         this.write(stringVersion);
         this.end();
         //this.send(statusCode, stringVersion);
@@ -117,7 +117,7 @@ class Response{
         if(statusCodes.hasOwnProperty(this.statusCode)){
             resp = resp.concat(statusCodes[this.statusCode] + "\r\n");
         }
-        let headers = this.headers;
+        const headers = this.headers;
         Object.keys(headers).forEach(function(key) {
 
             resp = resp.concat(key + ": " + headers[key] + '\r\n');
@@ -134,17 +134,17 @@ class Response{
     }
 
     sendFile(fileName){
-        let fileBeginning = '../public';
-        let filePath = fileBeginning + fileName;
+        const fileBeginning = '../public';
+        const filePath = fileBeginning + fileName;
         console.log("file path is " + filePath);
 
-        let fileType = fileName.split(".")[1];
+        const fileType = fileName.split(".")[1];
         const encoding = {
             'encoding' : ""
         };
         if(fileType === 'txt'){
             console.log("encoding is now utf8");
-            encoding.encoding == "utf8";
+            encoding.encoding = "utf8";
         }
         console.log("file type is " + fileType);
         fs.readFile(filePath, encoding, this.fileHandler.bind(this, fileType));
@@ -169,7 +169,7 @@ class Response{
 
 
 }
-let fileTypes = {
+const fileTypes = {
     'jpeg': 'image/jpeg',
     'jpg' : 'image/jpeg',
     'png' : 'image/png',
@@ -179,7 +179,7 @@ let fileTypes = {
     'txt' : 'text/plain'
 };
 
-let statusCodes ={
+const statusCodes ={
     '200' : 'OK',
     '404' : 'Not Found',
     '500' : 'Internal Server Error',
@@ -204,12 +204,12 @@ class Request{
         this.method = firstLineSplit[0].toString();
         this.path = firstLineSplit[1].toString();
 
-        let whereDoesBodyStart = responseSplit.length-1;
+        const whereDoesBodyStart = responseSplit.length-1;
         const headers = {
 
         };
         for(let i=1; i<responseSplit.length; i++){
-            let tempSplit = responseSplit[i].split(": ");
+            const tempSplit = responseSplit[i].split(": ");
             if(tempSplit[1] === undefined){
                 continue;
             }
@@ -231,7 +231,7 @@ class Request{
     s = s.concat(this.method+ " ");
     s = s.concat(this.path + " ");
     s = s.concat(this.version + "\r\n");
-    let headers = this.headers;
+    const headers = this.headers;
 
         Object.keys(headers).forEach(function(key) {
 
