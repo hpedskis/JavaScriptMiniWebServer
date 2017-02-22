@@ -5,19 +5,19 @@ const fs = require('fs');
 
 class App {
     constructor() { //pretty sure this is right
-        console.log("inside constructor for new app object");
+        //console.log("inside constructor for new app object");
         this.server = net.createServer(this.handleConnection.bind(this));
         //this.server.listen(8080, '127.0.0.1');
         this.routes = {};
     }
 
     get(path, cb) { //pretty sure this is right
-        console.log("inside get with path " + path + " and cb " + cb);
+        //console.log("inside get with path " + path + " and cb " + cb);
         this.routes[path] = cb; //callback should take req and resp parameters
     }
 
     listen(port, host) { //pretty sure this is right
-        console.log("trying to listen");
+        //console.log("trying to listen");
         this.server.listen(port, host);
 
     }
@@ -28,126 +28,41 @@ class App {
     }
 
     handleRequestData(sock, binaryData) {
-        console.log('got data\n=====\n' + binaryData);
+        //console.log('got data\n=====\n' + binaryData);
 
         //convert binaryData to string
         const bin = binaryData + '';
 
         //crete requestObject form string
         const reqobj = new Request(bin);
-        console.log(reqobj.headers);
+        //console.log(reqobj.headers);
         //create new response ojbect
         const resTest = new Response(sock);
 
-        //TODO: IS THIS WORKING??
         if (!reqobj.headers.hasOwnProperty('Host')) {
-            console.log("doesn't have header");
+            //console.log("doesn't have header");
             resTest.setHeader('Content-Type', 'text/html');
             resTest.send(400, '<h1><em>Not a valid request</em></h1>');
         }
 
-        if (app.routes.hasOwnProperty(reqobj.path)) {
-            console.log("this path " + reqobj.path + " has been set up");
-            const requestHandler = app.routes[reqobj.path];
+        if (this.routes.hasOwnProperty(reqobj.path)) {
+            const requestHandler = this.routes[reqobj.path];
             requestHandler(reqobj, resTest);
         }else{
-            resTest.setHeader('Content-Type', 'text/html');
+            resTest.setHeader('Content-Type', 'text/css');
             resTest.send(404, '<h1><em>This isn\'t a page :(</em></h1>');
         }
 
         sock.on('close', this.logResponse.bind(this, reqobj, resTest));
-        /*/
-         if(reqobj.path === '/'){
-         resTest.setHeader('Content-Type', 'text/html');
-         resTest.send(300, '<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
-
-         }
-         else if(reqobj.path === "/foo.css"){
-         resTest.setHeader('Content-Type', 'text/html');
-         resTest.send(300, '<h1><em>Welcome to the hidden page!!</em></h1>');
-         }
-         else if(reqobj.path === '/bmo1.gif'){
-         resTest.sendFile('/img/bmo1.gif');
-         }
-         else if (reqobj.path === '/test'){
-         resTest.sendFile('/html/test.html')
-         }
-         else{
-         resTest.setHeader('Content-Type', 'text/html');
-         resTest.send(404, 'this is not a page');
-
-         }
-
-
-         //if connection is closed, logResponse(req, res);
-         }
-         /*/
 
     }
 
     logResponse(req, res) {
-        console.log(req.method);
-        console.log(req.path);
-        console.log(res.statusCode);
+        console.log(req.method + " " + req.path + " " + res.statusCode);
         console.log("socket has been closed successfully");
     }
 }
 
-const app = new App();
-console.log("just tried to make app");
-app.get('/hello', function(req, res) {
-    res.send(200, 'HELLO WORLD');
-});
-app.get('/bmo1.gif', function(req, res) {
-    res.sendFile('/img/bmo1.gif');
-});
-app.get('/harrypotter', function(req, res){
-    res.sendFile('/img/celebration.gif');
-})
-app.listen(8080, '127.0.0.1');
-
-/*/
-const server = net.createServer((sock) => {
-    console.log('got connection from ' + sock.remoteAddress + ':' + sock.remotePort);
-
-    sock.on('data', function(binaryData) {
-        console.log('got data\n=====\n' + binaryData);
-        const bin = binaryData + '';
-        const reqobj = new Request(bin);
-
-        const resTest = new Response(sock);
-
-
-        //TODO: figure out this """CSS""" nonsense
-        if(reqobj.path === '/'){
-            resTest.setHeader('Content-Type', 'text/html');
-            resTest.send(300, '<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
-
-        }
-        else if(reqobj.path === "/foo.css"){
-            resTest.setHeader('Content-Type', 'text/html');
-            resTest.send(300, '<h1><em>Welcome to the hidden page!!</em></h1>');
-        }
-        else if(reqobj.path === '/bmo1.gif'){
-            resTest.sendFile('/img/bmo1.gif');
-        }
-        else if (reqobj.path === '/test'){
-            resTest.sendFile('/html/test.html')
-        }
-        else{
-            resTest.setHeader('Content-Type', 'text/html');
-            resTest.send(404, 'this is not a page');
-
-        }
-
-    });
-
-
-});
-
-
-server.listen(PORT, HOST);
-/*/
 
 class Response{
 
@@ -236,17 +151,17 @@ class Response{
     sendFile(fileName){
         let fileBeginning = '../public';
         let filePath = fileBeginning + fileName;
-        console.log("file path is " + filePath);
+        //console.log("file path is " + filePath);
 
         let fileType = fileName.split(".")[1];
         const encoding = {
             'encoding' : ""
         };
         if(fileType === 'txt'){
-            console.log("encoding is now utf8");
+            //console.log("encoding is now utf8");
             encoding.encoding == "utf8";
         }
-        console.log("file type is " + fileType);
+        //console.log("file type is " + fileType);
         fs.readFile(filePath, encoding, this.fileHandler.bind(this, fileType));
 
 
@@ -359,7 +274,7 @@ class Request{
 module.exports = {
     Request: Request,
     Response: Response,
-   // App: App
+    App: App
 
 };
 

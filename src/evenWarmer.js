@@ -19,15 +19,17 @@ const server = net.createServer((sock) => {
     //TODO: figure out this """CSS""" nonsense
         if(reqobj.path === '/'){
             resTest.setHeader('Content-Type', 'text/html');
-            resTest.send(300, '<h1><em>FINALLY IT WORKS. Hello, Beautiful world!</em></h1>');
+            resTest.send(300, '<head><link href="/stylesheet.css" rel="stylesheet"/><img src = "/bmo1.gif"/></head> ' +
+                '<body><h2>Welcome to the homepage!</h2></body>');
 
         }
-        else if(reqobj.path === "/foo.css"){
-            resTest.setHeader('Content-Type', 'text/html');
-            resTest.send(300, '<h1><em>Welcome to the hidden page!!</em></h1>');
+
+        else if(reqobj.path === "/stylesheet.css"){
+            resTest.sendFile('/stylesheet.css');
         }
         else if(reqobj.path === '/bmo1.gif'){
             resTest.sendFile('/img/bmo1.gif');
+
         }
         else if (reqobj.path === '/test'){
             resTest.sendFile('/html/test.html')
@@ -151,12 +153,13 @@ class Response{
     }
 
     fileHandler(contentType, err, data){
-    //console.log("data is " + data);
+    console.log("data is " + data);
 
     //1. set the contentType header
      if(fileTypes.hasOwnProperty(contentType)){
         this.setHeader('Content-Type', fileTypes[contentType]);
      }
+     console.log("content type is " + fileTypes[contentType]);
      this.writeHead(200);
      this.write(data);
      this.end();
